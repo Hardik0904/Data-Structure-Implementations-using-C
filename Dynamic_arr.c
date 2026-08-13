@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #define Initial_Capacity 4
 
 typedef struct{
@@ -45,6 +46,42 @@ void da_push_back(DynamicArray *da, int val){
     da->data[da->size++]=val;;
 }
 
+//pop an elment from last
+bool da_pop_back(DynamicArray* da, int *out_value){
+    if(da->size == 0) return false;
+    da->size--;
+    if(out_value) *out_value=da->data[da->size];
+    //if da size is n/4 shrink the capacity to n/2
+    if(da->size!=0 && da->size<=da->capacity/4 && da->capacity/2>Initial_Capacity)
+    resize(da, da->capacity/2);
+    return true;
+}
+
+//insert element at given index
+bool da_insert(DynamicArray* da, size_t index, int value){
+    if(index>da->size) return false;
+    if(da->size == da->capacity)
+    resize(da, da->capacity*2);
+    for(size_t i=da->size; i>index; i--){
+        da->data[i]=da->data[i-1];
+        da->data[index] = value;
+        da->size++;
+        return true;
+    }
+}
+
+//remove element at given index
+bool da_remove(DynamicArray* da, size_t index, int* out_value){
+    if(index>=da->size) return false;
+    if(out_value) *out_value=da->data[index];
+    for(size_t i=index; i<da->size; i++){
+        da->data[i]=da->data[i+1];
+    }
+    da->size--;
+    if(da->size>0 && da->size<=da->capacity/4 && da->capacity/2>=Initial_Capacity)
+    resize(da, da->capacity/2);
+    return true;
+}
 
 //print arary elements
 void da_print(DynamicArray *da){
