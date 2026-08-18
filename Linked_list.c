@@ -25,17 +25,19 @@ node* ll_init(int value){
 }
 
 //push element at back
-void push_back(node *head, int value){
+node* push_back(node *head, int value){
     
     node* new_node=ll_init(value);
     if(head==NULL){
         head=new_node;
+        return head;
     }
     node* temp=head;
     while(temp->next!=NULL){
         temp=temp->next;
     }
     temp->next=new_node;
+    return head;
 }
 
 //insert at k
