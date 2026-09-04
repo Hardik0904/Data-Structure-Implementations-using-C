@@ -63,11 +63,11 @@ bool da_insert(DynamicArray* da, size_t index, int value){
     if(da->size == da->capacity)
     resize(da, da->capacity*2);
     for(size_t i=da->size; i>index; i--){
-        da->data[i]=da->data[i-1];
-        da->data[index] = value;
-        da->size++;
-        return true;
+        da->data[i]=da->data[i-1];  
     }
+    da->data[index] = value;
+    da->size++;
+    return true;
 }
 
 //remove element at given index
